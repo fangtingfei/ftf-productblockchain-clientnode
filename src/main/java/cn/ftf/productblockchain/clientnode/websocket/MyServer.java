@@ -18,7 +18,7 @@ public class MyServer extends WebSocketServer {
     private int port;
 
     public MyServer(int port) {
-        super(new InetSocketAddress(port));
+         super(new InetSocketAddress(port));
         this.port = port;
     }
 

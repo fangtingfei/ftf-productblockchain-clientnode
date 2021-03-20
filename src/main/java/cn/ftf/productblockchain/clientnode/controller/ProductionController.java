@@ -53,9 +53,7 @@ public class ProductionController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
-
-
-
-        return new Result(true,"success");}}
+        return new Result(true,"success");
+    }
+}
 
