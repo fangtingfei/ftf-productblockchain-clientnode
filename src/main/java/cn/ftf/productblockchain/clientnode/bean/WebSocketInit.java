@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
-import java.net.URL;
 import java.util.HashSet;
 /**
  * WebSocketInit

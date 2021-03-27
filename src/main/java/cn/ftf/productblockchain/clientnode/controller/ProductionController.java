@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * client-ProductionController
  *
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@RequestMapping("/product")
 public class ProductionController {
 
     Logger logger= LoggerFactory.getLogger(getClass());
@@ -42,6 +45,7 @@ public class ProductionController {
         String broadcastedProductInfoJson=null;
         String broadcastedMsgJSON=null;
         logger.info("[接收商品信息] productInfo:" + productInfo);
+        productInfo.setProductionDate(String.valueOf(System.currentTimeMillis()));
         ObjectMapper mapper = new ObjectMapper();
         try {
             productInfojson = mapper.writeValueAsString(productInfo);
