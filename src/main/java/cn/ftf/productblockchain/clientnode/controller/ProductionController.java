@@ -3,8 +3,11 @@ package cn.ftf.productblockchain.clientnode.controller;
 import cn.ftf.productblockchain.clientnode.bean.POJO.BroadcastedProductInfo;
 import cn.ftf.productblockchain.clientnode.bean.NodeKey;
 import cn.ftf.productblockchain.clientnode.bean.POJO.ProductInfo;
+import cn.ftf.productblockchain.clientnode.bean.WebSocketInit;
+import cn.ftf.productblockchain.clientnode.message.BroadcastMsg;
 import cn.ftf.productblockchain.clientnode.message.Result;
 import cn.ftf.productblockchain.clientnode.util.RSAUtils;
+import cn.ftf.productblockchain.clientnode.websocket.MyServer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -31,10 +34,13 @@ public class ProductionController {
     @Autowired
     private NodeKey nodeKey;
 
+    private MyServer server= WebSocketInit.server;
+
     @RequestMapping(value = "/addProduction", method = RequestMethod.POST)
     public Result addProduction(@RequestBody ProductInfo productInfo) throws Exception {
         String productInfojson = null;
         String broadcastedProductInfoJson=null;
+        String broadcastedMsgJSON=null;
         logger.info("[接收商品信息] productInfo:" + productInfo);
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -51,6 +57,20 @@ public class ProductionController {
             broadcastedProductInfoJson = mapper.writeValueAsString(broadcastedProductInfo);
             logger.info("[生成加密商品信息JSON] broadcastedProductInfoJson:" + broadcastedProductInfoJson);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        try {
+            BroadcastMsg broadcastMsg=new BroadcastMsg(0,broadcastedProductInfoJson);
+            broadcastedMsgJSON = mapper.writeValueAsString(broadcastMsg);
+            logger.info("[生成广播体JSON] broadcastedMsgJSON:" + broadcastedMsgJSON);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        try {
+            server.broadcast(broadcastedMsgJSON);
+            logger.info("[广播成功] broadcastedMsgJSON:" + broadcastedMsgJSON);
+        }catch (Exception e){
+            logger.info("[广播失败] ERROR msg:"+e.getMessage());
             e.printStackTrace();
         }
         return new Result(true,"success");

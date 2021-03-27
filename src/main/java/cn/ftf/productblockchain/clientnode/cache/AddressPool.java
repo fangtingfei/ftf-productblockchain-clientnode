@@ -1,12 +1,18 @@
 package cn.ftf.productblockchain.clientnode.cache;
 
+import cn.ftf.productblockchain.clientnode.util.RSAUtils;
 import cn.ftf.productblockchain.clientnode.websocket.MyClient;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * AddressPool
@@ -22,16 +28,23 @@ public class AddressPool {
     }
 
     @PostConstruct
-    public void init(){
-        //初始化客户端
-//        addressPoll.add("ws://127.0.0.1:7000");
-//        addressPoll.add("ws://127.0.0.1:7001");
-//        addressPoll.add("ws://127.0.0.1:7002");
+    public void init() throws Exception {
+        File addressPool = new File("addressPool.url");
+        if (!addressPool.exists() || addressPool.length() == 0 || !addressPool.exists() || addressPool.length() == 0) {
+            addressPool.createNewFile();
+        }
+        List<String> addressFromFile = FileUtils.readLines(addressPool, "UTF-8");
+        addressFromFile.stream().forEach(address->addURL(address));
     }
 
-    public void addURL(String url) throws URISyntaxException {
+    public void addURL(String url){
         addressPoll.add(url);
-        MyClient client = new MyClient(new URI(url));
+        MyClient client = null;
+        try {
+            client = new MyClient(new URI(url));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         client.connect();
     }
     public void removeURL(String url){
