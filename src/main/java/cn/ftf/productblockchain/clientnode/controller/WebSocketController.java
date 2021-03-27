@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
  * @Author 房廷飞
  * @Create 2021-03-20 21:27
  */
-@Controller
+@RestController
 @RequestMapping("/node")
 public class WebSocketController {
     Logger logger= LoggerFactory.getLogger(getClass());

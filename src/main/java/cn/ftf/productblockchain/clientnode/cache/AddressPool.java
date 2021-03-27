@@ -46,10 +46,10 @@ public class AddressPool {
         addressPoll.add(uri);
         MyClient client = null;
         try {
-            logger.info("[注册节点] URI=",uri);
+            logger.info("[注册节点] URI={}",uri);
             client = new MyClient(new URI(uri));
         } catch (URISyntaxException e) {
-            logger.info("[注册节点失败] URI=",uri);
+            logger.info("[注册节点失败] URI={}",uri);
             e.printStackTrace();
         }
         client.connect();

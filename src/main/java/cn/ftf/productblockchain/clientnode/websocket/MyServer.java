@@ -27,27 +27,27 @@ public class MyServer extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        logger.info("[服务端开启连接] port=",port);
+        logger.info("[服务端开启连接] port={}",port);
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        logger.info("[服务端关闭连接连接] port=",port);
+        logger.info("[服务端关闭连接连接] port={}",port);
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        logger.info("[服务端接收消息] Msg=",message);
+        logger.info("[服务端接收消息] Msg={}",message);
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        logger.info("[服务端出错] port=",port);
+        logger.info("[服务端出错] port={}",port);
     }
 
     @Override
     public void onStart() {
-        logger.info("[服务端开启成功] port=",port);
+        logger.info("[服务端开启成功] port={}",port);
     }
 
     public void startServer() {
