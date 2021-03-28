@@ -41,12 +41,11 @@ public class AddressPool {
 
     public void addURI(String uri){
         if(addressPoll.contains(uri)){
+            logger.info("[重复注册，未执行注册] URI={}",uri);
             return;
         }
-        addressPoll.add(uri);
         MyClient client = null;
         try {
-            logger.info("[注册节点] URI={}",uri);
             client = new MyClient(new URI(uri));
         } catch (URISyntaxException e) {
             logger.info("[注册节点失败] URI={}",uri);

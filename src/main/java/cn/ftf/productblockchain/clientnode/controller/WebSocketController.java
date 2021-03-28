@@ -25,8 +25,8 @@ public class WebSocketController {
     private AddressPool addressPool;
     @GetMapping("/add")
     public Result addNode (String uri)throws Exception{
+        logger.info("[注册节点] URI={}",uri);
         addressPool.addURI(uri);
-        logger.info("[添加节点成功] URI={}",uri);
         return new Result(true,"success");
     }
     @PostMapping("/remove")
