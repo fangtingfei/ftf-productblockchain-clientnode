@@ -1,7 +1,7 @@
 package cn.ftf.productblockchain.clientnode.controller;
 
 import cn.ftf.productblockchain.clientnode.bean.POJO.BroadcastedProductInfo;
-import cn.ftf.productblockchain.clientnode.bean.NodeKey;
+import cn.ftf.productblockchain.clientnode.bean.NodeKeyInit;
 import cn.ftf.productblockchain.clientnode.bean.POJO.ProductInfo;
 import cn.ftf.productblockchain.clientnode.bean.WebSocketInit;
 import cn.ftf.productblockchain.clientnode.message.BroadcastMsg;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-
 /**
  * client-ProductionController
  *
@@ -35,7 +33,7 @@ public class ProductionController {
     Logger logger= LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private NodeKey nodeKey;
+    private NodeKeyInit nodeKeyInit;
 
     private MyServer server= WebSocketInit.server;
 
@@ -53,9 +51,9 @@ public class ProductionController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        String signature = RSAUtils.getSignature("SHA256withRSA", nodeKey.getPrivateKey(), productInfojson);
+        String signature = RSAUtils.getSignature("SHA256withRSA", nodeKeyInit.getPrivateKey(), productInfojson);
 
-        BroadcastedProductInfo broadcastedProductInfo=new BroadcastedProductInfo(productInfo.getCompany(),productInfo.getProduct(),productInfo.getProductionDate(),productInfo.getOrginPlace(),productInfo.getDescription(),productInfo.getNotes(), Base64.encodeBase64String(nodeKey.getPublicKey().getEncoded()),signature);
+        BroadcastedProductInfo broadcastedProductInfo=new BroadcastedProductInfo(productInfo.getCompany(),productInfo.getProduct(),productInfo.getProductionDate(),productInfo.getOrginPlace(),productInfo.getDescription(),productInfo.getNotes(), Base64.encodeBase64String(nodeKeyInit.getPublicKey().getEncoded()),signature);
         logger.info("[生成加密商品信息] broadcastedProductInfo:" + broadcastedProductInfo);
         try {
             broadcastedProductInfoJson = mapper.writeValueAsString(broadcastedProductInfo);

@@ -55,6 +55,13 @@ public class AddressPool {
     }
     public void removeURI(String uri){
         addressPoll.remove(uri);
+        try {
+            MyClient client = new MyClient(new URI(uri));
+            client.close();
+            logger.info("[连接销毁] URI={}",uri);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
     public HashSet<String> getAddressPoll() {
         return addressPoll;

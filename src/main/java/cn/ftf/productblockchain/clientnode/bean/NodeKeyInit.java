@@ -16,7 +16,7 @@ import java.security.PublicKey;
  * @Create 2021-03-19 22:38
  */
 @Component
-public class NodeKey {
+public class NodeKeyInit {
     // 公钥
     public PublicKey publicKey;
     // 私钥
