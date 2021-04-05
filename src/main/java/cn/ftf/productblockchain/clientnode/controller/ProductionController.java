@@ -46,7 +46,7 @@ public class ProductionController {
         String broadcastedProductInfoJson=null;
         String broadcastedMsgJSON=null;
         logger.info("[接收商品信息] productInfo:" + productInfo);
-        productInfo.setProductionDate(String.valueOf(System.currentTimeMillis()));
+        productInfo.setTimeStamp(System.currentTimeMillis());
         ObjectMapper mapper = new ObjectMapper();
         try {
             productInfojson = mapper.writeValueAsString(productInfo);
@@ -56,7 +56,7 @@ public class ProductionController {
         }
         String signature = RSAUtils.getSignature("SHA256withRSA", nodeKeyInit.getPrivateKey(), productInfojson);
 
-        BroadcastedProductInfo broadcastedProductInfo=new BroadcastedProductInfo(productInfo.getCompany(),productInfo.getProduct(),productInfo.getProductionDate(),productInfo.getOrginPlace(),productInfo.getDescription(),productInfo.getNotes(), Base64.encodeBase64String(nodeKeyInit.getPublicKey().getEncoded()),signature);
+        BroadcastedProductInfo broadcastedProductInfo=new BroadcastedProductInfo(productInfo.getCompany(),productInfo.getProduct(),productInfo.getTimeStamp(),productInfo.getOrginPlace(),productInfo.getDescription(),productInfo.getNotes(), Base64.encodeBase64String(nodeKeyInit.getPublicKey().getEncoded()),signature);
         logger.info("[生成加密商品信息] broadcastedProductInfo:" + broadcastedProductInfo);
         try {
             broadcastedProductInfoJson = mapper.writeValueAsString(broadcastedProductInfo);

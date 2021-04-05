@@ -13,7 +13,7 @@ import java.util.Objects;
 public class BroadcastedProductInfo implements Serializable {
     private String company;
     private String product;
-    private String productionDate;
+    private Long timeStamp;
     private String orginPlace;
     private String description;
     private String notes;
@@ -26,10 +26,11 @@ public class BroadcastedProductInfo implements Serializable {
     public BroadcastedProductInfo(){
 
     }
-    public BroadcastedProductInfo(String company, String product, String productionDate, String orginPlace, String description, String notes, String senderPublicKey, String signaturedData) {
+
+    public BroadcastedProductInfo(String company, String product, Long timeStamp, String orginPlace, String description, String notes, String senderPublicKey, String signaturedData) {
         this.company = company;
         this.product = product;
-        this.productionDate = productionDate;
+        this.timeStamp = timeStamp;
         this.orginPlace = orginPlace;
         this.description = description;
         this.notes = notes;
@@ -53,12 +54,12 @@ public class BroadcastedProductInfo implements Serializable {
         this.product = product;
     }
 
-    public String getProductionDate() {
-        return productionDate;
+    public Long getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setProductionDate(String productionDate) {
-        this.productionDate = productionDate;
+    public void setTimeStamp(Long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getOrginPlace() {
@@ -102,31 +103,11 @@ public class BroadcastedProductInfo implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BroadcastedProductInfo that = (BroadcastedProductInfo) o;
-        return Objects.equals(company, that.company) &&
-                Objects.equals(product, that.product) &&
-                Objects.equals(productionDate, that.productionDate) &&
-                Objects.equals(orginPlace, that.orginPlace) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(notes, that.notes) &&
-                Objects.equals(senderPublicKey, that.senderPublicKey) &&
-                Objects.equals(signaturedData, that.signaturedData);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(company, product, productionDate, orginPlace, description, notes, senderPublicKey, signaturedData);
-    }
-
-    @Override
     public String toString() {
         return "BroadcastedProductInfo{" +
                 "company='" + company + '\'' +
                 ", product='" + product + '\'' +
-                ", productionDate='" + productionDate + '\'' +
+                ", timeStamp=" + timeStamp +
                 ", orginPlace='" + orginPlace + '\'' +
                 ", description='" + description + '\'' +
                 ", notes='" + notes + '\'' +
